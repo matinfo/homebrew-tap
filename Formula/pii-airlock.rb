@@ -3,8 +3,8 @@ class PiiAirlock < Formula
 
   desc "Local privacy gateway that keeps PII out of LLM traffic"
   homepage "https://github.com/matinfo/pii-airlock"
-  url "https://files.pythonhosted.org/packages/ed/8c/ebcba5c2886f1baef2785d23e2b5fbc86001f1b82fc4941729b05a12741e/pii_airlock-0.5.0.tar.gz"
-  sha256 "1783a630c82207ff3c40091d8bf9e00adf6440c8c72784fe268ee9fe1007c77a"
+  url "https://files.pythonhosted.org/packages/7f/f5/d9b75c32282c83ebe01ab09c29c1d93b25eca015b7fccc64759e99c75ff7/pii_airlock-0.6.0.tar.gz"
+  sha256 "2348d04428355947291d9d9e8c1d44a6c5d5ade3703a0a957e86a6d294c8c331"
   license "MIT"
 
   depends_on "python@3.12"
