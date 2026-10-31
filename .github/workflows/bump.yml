@@ -1,0 +1,37 @@
+name: Bump formula
+
+# Follows PyPI: daily, and on demand, point the formula at the newest
+# pii-airlock sdist and commit the change.
+on:
+  schedule:
+    - cron: "23 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Update formula from PyPI
+        run: |
+          python3 - <<'PY'
+          import json, re, urllib.request
+          data = json.load(urllib.request.urlopen("https://pypi.org/pypi/pii-airlock/json"))
+          sdist = next(u for u in data["urls"] if u["packagetype"] == "sdist")
+          path = "Formula/pii-airlock.rb"
+          text = open(path).read()
+          text = re.sub(r'url "[^"]+"', f'url "{sdist["url"]}"', text, count=1)
+          text = re.sub(r'sha256 "[0-9a-f]+"', f'sha256 "{sdist["digests"]["sha256"]}"', text, count=1)
+          open(path, "w").write(text)
+          open("/tmp/version", "w").write(data["info"]["version"])
+          PY
+      - name: Commit
+        run: |
+          git diff --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "pii-airlock $(cat /tmp/version)"
+          git push
