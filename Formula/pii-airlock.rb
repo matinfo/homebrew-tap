@@ -1,4 +1,6 @@
 class PiiAirlock < Formula
+  include Language::Python::Virtualenv
+
   desc "Local privacy gateway that keeps PII out of LLM traffic"
   homepage "https://github.com/matinfo/pii-airlock"
   url "https://files.pythonhosted.org/packages/3f/69/c8ddd80fd02f2ee9c1a0d618f3d0f783c8bc16ac5fb154d4f9660e276f1d/pii_airlock-0.4.0.tar.gz"
